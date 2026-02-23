@@ -21,14 +21,32 @@ To write and execute an Assembly Language Program for sorting data in Ascending 
 ---
 
 ## Program (Ascending order)
+ORG 0000H
+MOV R4,#04H        ; Number of passes (N-1)
+OUTER: MOV R3,#04H ; Inner loop counter
+MOV R0,#50H        ; Array starting address
+INNER: MOV A,@R0
+MOV B,A
+INC R0
+CLR C
+SUBB A,@R0         ; Compare adjacent elements
+JC NO_SWAP         ; If A < @R0 (Carry), no swap
+; Exchange elements
+MOV A,@R0
+XCH A,B
+MOV @R0,A
+DEC R0
+MOV A,B
+XCH A,B
+MOV @R0,A
+INC R0
+NO_SWAP: DJNZ R3,INNER
+DJNZ R4,OUTER
+END
 
-```asm
 
-
-
-
-```
 ## OUTPUT(Ascending order)
+<img width="1917" height="832" alt="ascending" src="https://github.com/user-attachments/assets/87f26402-1467-4a31-9956-92f0f6fba787" />
 
 
 
@@ -47,18 +65,32 @@ To write and execute an Assembly Language Program for sorting data in Ascending 
    - If **Yes**, stop the program.  
 ---
 ## Program (Descending order)
+ORG 0000H
+MOV R1,30H     ; Outer loop count = N
+DEC R1
 
-```asm
+LOOP1: MOV R0,#40H
+       MOV R6,30H
+       DEC R6
 
+LOOP:  MOV A,@R0
+       INC R0
+       MOV B,@R0
+       CJNE A,B,NEXT
+NEXT:  JNC DOWN
 
+       MOV @R0,A
+       DEC R0
+       MOV @R0,B
+       INC R0
 
+DOWN:  DJNZ R6,LOOP
+       DJNZ R1,LOOP1   ; Outer loop ends correctly
 
-```
+END
 ## OUTPUT(Descending order)
+![de](https://github.com/user-attachments/assets/a6a5c68b-8f61-47ac-bac3-edc0b77ca22d)
 
-
-
----
 ## RESULT:
 Thus the sorting of given data was done using 8051 keil software.
 
